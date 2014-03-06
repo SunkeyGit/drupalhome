@@ -1,0 +1,133 @@
+<?php
+/**
+ *@file Custom Blog Drupalhome site
+ *
+ */
+
+function blog_drupalhome_form_alter(&$form, &$form_state, $form_id){
+      switch($form_id){
+	     case 'comment_node_blog_form':{
+		     $form['comment_body']['und'][0]['#title'] = t('评论');
+		     break; 
+		 }
+
+	     case 'search_block_form':{
+		    $form['actions']['submit']['#value'] = t('');
+			$form['search_block_form']['#attributes']['placeholder'] = t('输入关键词');
+		 	break; 
+		 }
+	     case 'blog_node_form':{
+		    $form['#action'] = '/bloger/write';
+			break;
+		 }
+		 case 'apachesolr_search_custom_page_search_form':{
+		    $form['basic']['submit']['#value'] = t('马上搜索');
+		    $form['basic']['keys']['#title'] = t('');
+		    $form['basic']['keys']['#attributes']['placeholder'] = t('请输入关键词');
+		    break; 
+		 }
+		 case 'views_exposed_form':{
+		    $form['tag']['#attributes']['placeholder'] = t('请输入Tag');  
+		    break;
+		 }
+	     case 'user_register_form':{
+		     $form['account']['name'] = array(
+			     '#type' => 'textfield',
+				 '#title' => t('用户名'),
+				 '#description' => t('6-16位字母,数字,下划线的组合'),
+				 '#maxlength' => 16,
+				 '#required' => TRUE,
+			 );
+		     $form['account']['mail'] = array(
+			     '#type' => 'textfield',
+				 '#title' => t('邮箱'),
+				 '#description' => t('请填写真实邮箱,用于激活账号/找回密码'),
+				 '#required' => TRUE,
+		     );
+		     $form['account']['pass'] = array(
+			     '#type' => 'password_confirm',
+				 '#description' => t('请使用最少6位的字符组合以增加密码强度'),
+				 '#required' => TRUE,
+		     );
+			 break;
+		 }
+		 case 'user_login':{
+		     $form['name'] = array(
+			     '#type' => 'textfield',
+			     '#title' => t('登录名'),
+			     '#description' => t(''),
+				 '#required' => TRUE,
+				 '#attributes' => array('placeholder'=>t('用户名/邮箱')),
+			 );
+		     $form['pass'] = array(
+			     '#type' => 'password',
+			     '#title' => t('登陆密码'),
+			     '#description' => t(''),
+				 '#required' => TRUE,
+				 '#attributes' => array('placeholder'=>t('密码')),
+			 );
+			 $form['actions']['submit'] = array(
+			     '#type' => 'submit',
+				 '#value' => t('登录'),
+			 );
+			 break;
+		 }
+	  }
+}
+
+
+function blog_drupalhome_element_info_alter(&$types){
+    if(isset($types['password_confirm']['#process'])&& ($position = array_search('user_form_process_password_confirm', $types['password_confirm']['#process']))!=FALSE){
+        unset($types['password_confirm']['#process'][$position]);	
+	}
+}
+
+function blog_drupalhome_node_submit($node, $form, &$form_state){
+    if($node->type=='blog'){
+    	global $user;
+		$node->uid = $user->uid;
+	}
+}
+
+function _blog_drupalhome_custom_blog_node_form(&$form){
+    $form['und'][0]['format']['guidelines'] = '';
+	return $form;
+}
+/*
+function blog_drupalhome_apachesolr_index_document_build_node(ApacheSolrDocument $document, $node, $entity_id){
+   if($node->type=='blog'){
+	   $field_blog_from = $node->field_blog_from['und'][0]['value'];
+	   $field_blog_title = $node->title;
+	   $field_blog_content = $node->field_blog_content['und'][0]['value'];
+	   $field_blog_tags = '';
+	   $field_blog_created = date('Y-m-d H:i:s',$node->created);
+	   foreach($node->field_blog_tags['und'] as $key => $value){
+	       $tag = $value['taxonomy_term']->name; 
+		   $field_blog_tags .= '<span>'.l($tag, "search/tag?tag=$tag").'</span>';
+	   }
+       $statistics = statistics_get($node->nid); 
+	   $field_blog_totalcount = 100;//$statistics['totalcount'];
+
+       $document->addField('ts_field_blog_from', $field_blog_from); 
+       $document->addField('ts_field_blog_title', $field_blog_title); 
+       $document->addField('ts_field_blog_content', $field_blog_content); 
+       $document->addField('ts_field_blog_tags', $field_blog_tags); 
+       $document->addField('ts_field_blog_created', $field_blog_created); 
+       $document->addField('is_field_blog_totalcount', $field_blog_totalcount); 
+   }
+}
+
+function blog_drupalhome_apachesolr_query_prepare(DrupalSolrQueryInterface $query){
+    $query->addParam('fl', 'ts_field_blog_from');
+    $query->addParam('fl', 'ts_field_blog_title');
+    $query->addParam('fl', 'ts_field_blog_content');
+    $query->addParam('fl', 'ts_field_blog_tags');
+    $query->addParam('fl', 'ts_field_blog_created');
+    $query->addParam('fl', 'is_field_blog_totalcount');
+}
+*/
+
+function blog_drupalhome_wysiwyg_editor_settings_alter(&$settings, $context){
+}
+
+?>

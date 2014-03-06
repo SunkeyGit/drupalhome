@@ -1,0 +1,7 @@
+name = Blog Drupalhome
+description = Blog Drupalhome
+package = Blog Drupalhome
+core = 7.x
+version = 7.x
+php = 5.4
+

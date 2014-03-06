@@ -1,0 +1,29 @@
+.panel-3col-stacked { 
+   /* overflow: hidden;  */
+}
+
+.panel-3col-stacked .panel-col-top,
+.panel-3col-stacked .panel-col-bottom { 
+    width: 100%; 
+}
+
+.panel-3col-stacked .center-wrapper{
+    overflow: hidden;
+}
+
+.panel-3col-stacked .panel-col-first { 
+  float: left; 
+  width: 180px; 
+  margin-right: 20px;
+}
+
+.panel-3col-stacked .panel-col { 
+  float: left; 
+  width: 600px; 
+}
+
+.panel-3col-stacked .panel-col-last { 
+  float: left; 
+  width: 180px; 
+  margin-left: 20px;
+}

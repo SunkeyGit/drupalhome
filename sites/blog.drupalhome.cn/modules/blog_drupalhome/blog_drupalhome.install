@@ -1,0 +1,33 @@
+<?php
+
+function blog_drupalhome_install(){
+    cache_set('163.com', 'http://mail.163.com', 'cache');
+    cache_set('126.com', 'http://www.126.com', 'cache');
+    cache_set('qq.com', 'http://mail.qq.com', 'cache');            	
+    cache_set('sina.com', 'http://mail.sina.com.cn', 'cache');            	
+    cache_set('sina.cn', 'http://mail.sina.com.cn', 'cache');            	
+    cache_set('sohu.com', 'http://mail.sohu.com', 'cache');            	
+    cache_set('189.com', 'http://mail.189.com', 'cache');            	
+    cache_set('tom.com', 'http://mail.tom.com', 'cache');            	
+    cache_set('aliyun.com', 'http://mail.aliyun.com', 'cache');            	
+    cache_set('gmail.com', 'http://mail.google.com', 'cache');            	
+    cache_set('outlook.com', 'http://www.outlook.com', 'cache');            	
+    cache_set('hotmail.com', 'http://login.live.com', 'cache');            	
+}
+
+function blog_drupalhome_uninstall(){
+    cache_clear_all('163.com', 'cache');            	
+    cache_clear_all('126.com', 'cache');            	
+    cache_clear_all('qq.com', 'cache');            	
+    cache_clear_all('sina.com', 'cache');            	
+    cache_clear_all('sina.cn', 'cache');            	
+    cache_clear_all('sohu.com', 'cache');            	
+    cache_clear_all('189.com', 'cache');            	
+    cache_clear_all('tom.com', 'cache');            	
+    cache_clear_all('aliyun.com', 'cache');            	
+    cache_clear_all('gmail.com', 'cache');            	
+    cache_clear_all('outlook.com', 'cache');            	
+    cache_clear_all('hotmail.com', 'cache');            	
+}
+
+?>
